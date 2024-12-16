@@ -1,5 +1,22 @@
 # Process Design Pattern (PDP)
 
+```mermaid
+flowchart LR
+    START(["Start Process"]) --> TakeOrder("Take Order")
+    TakeOrder --> RequiresCooking{"Order Requires Cooking?"}
+    RequiresCooking -- Yes --> CookOrder["Cook Order"]
+    RequiresCooking -- No --> DeliverOrder["Deliver Order"]
+    CookOrder --> DeliverOrder
+    DeliverOrder --> WaitForDelivery[" Wait for Delivery Confirmation"]
+    WaitForDelivery --> OrderComplete{"Order Complete?"}
+    OrderComplete -- Yes --> PerformClose["Close Order"]
+    OrderComplete -- No --> WaitForDelivery
+    PerformClose --> MoreOrders{"More Orders?"}
+    MoreOrders -- Yes --> START
+    MoreOrders -- No --> CloseRestaurant["Close Restaurant"]
+    CloseRestaurant --> END(["Finish Process"])
+```
+
 ## Introduction
 The **Process Design Pattern (PDP)** introduces a structured way to explicitly define and manage workflows within software applications. It provides a formalized framework for modeling processes, ensuring they are clear, maintainable, and aligned with business needs. By treating processes as first-class entities, the PDP helps avoid implicit and scattered workflow logic, enabling better testing, debugging, and collaboration across development teams.
 
@@ -203,7 +220,6 @@ The diagram demonstrates:
 - `ProcessContext`: Maintains the state and data of the process throughout its lifecycle.
 
 This structure shows how the PDP can encapsulate complex workflows, maintain state, and allow for flexibility in managing processes. The ProcessEngine ensures a consistent way to control the lifecycle of any process.
-
 
 #### Pseudocode for `Flow`:
 
